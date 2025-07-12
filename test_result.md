@@ -152,18 +152,39 @@ backend:
 
   - task: "Club Statistics API"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "low"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented GET /api/stats endpoint to retrieve club statistics including member count."
-      - working: true
-        agent: "testing"
-        comment: "✅ TESTING COMPLETED: Club Statistics API working perfectly. Returns accurate counts: total_inscriptions (2), total_contacts (1), total_evenements (1), membres_actifs (2). All required fields present and data matches actual MongoDB records. API provides real-time statistics for frontend dashboard display."
+
+  - task: "Events Management API"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added GET /api/evenements and POST /api/evenements endpoints for upcoming events management. Includes default events initialization."
+
+  - task: "Photo Gallery API"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added GET /api/galerie and POST /api/galerie endpoints for photo gallery management with categories and default photos."
 
 frontend:
   - task: "French Roller Derby Homepage"
