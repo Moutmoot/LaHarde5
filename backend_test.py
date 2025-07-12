@@ -277,8 +277,8 @@ def test_event_registration():
         return False
 
 def test_club_statistics():
-    """Test club statistics API"""
-    print("\n📈 Testing Club Statistics API...")
+    """Test UPDATED Club Statistics API with new fields"""
+    print("\n📈 Testing UPDATED Club Statistics API...")
     
     try:
         response = requests.get(f"{BACKEND_URL}/stats", timeout=10)
@@ -287,15 +287,25 @@ def test_club_statistics():
         
         if response.status_code == 200:
             data = response.json()
-            required_fields = ["total_inscriptions", "total_contacts", "total_evenements", "membres_actifs"]
+            # Updated required fields including new ones
+            required_fields = ["total_inscriptions", "total_contacts", "total_evenements", "membres_actifs", "total_photos", "evenements_a_venir"]
             
             if all(field in data for field in required_fields):
-                print("✅ Statistics API successful - all required fields present")
+                print("✅ Statistics API successful - all required fields present including NEW fields")
                 print(f"  📊 Total Inscriptions: {data['total_inscriptions']}")
                 print(f"  📧 Total Contacts: {data['total_contacts']}")
-                print(f"  🎉 Total Events: {data['total_evenements']}")
+                print(f"  🎉 Total Event Registrations: {data['total_evenements']}")
                 print(f"  👥 Active Members: {data['membres_actifs']}")
-                return True
+                print(f"  📸 Total Photos: {data['total_photos']} (NEW)")
+                print(f"  📅 Upcoming Events: {data['evenements_a_venir']} (NEW)")
+                
+                # Verify new fields have reasonable values
+                if data['total_photos'] >= 5 and data['evenements_a_venir'] >= 4:
+                    print("✅ New statistics fields have expected values from default data")
+                    return True
+                else:
+                    print(f"❌ New statistics fields have unexpected values - photos: {data['total_photos']}, upcoming events: {data['evenements_a_venir']}")
+                    return False
             else:
                 missing_fields = [field for field in required_fields if field not in data]
                 print(f"❌ Statistics API failed - missing fields: {missing_fields}")
