@@ -388,12 +388,14 @@ def main():
     
     test_results = {}
     
-    # Run all tests
+    # Run all tests - prioritizing NEW features
     test_results["health"] = test_health_check()
+    test_results["events_management"] = test_events_management()  # NEW
+    test_results["photo_gallery"] = test_photo_gallery()  # NEW
+    test_results["statistics"] = test_club_statistics()  # UPDATED
     test_results["member_registration"] = test_member_registration()
     test_results["contact_form"] = test_contact_form()
-    test_results["event_registration"] = test_event_registration()
-    test_results["statistics"] = test_club_statistics()
+    test_results["event_registration"] = test_event_registration()  # UPDATED
     test_results["validation"] = test_validation_errors()
     
     # Summary
@@ -406,7 +408,8 @@ def main():
     
     for test_name, result in test_results.items():
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{test_name.replace('_', ' ').title()}: {status}")
+        new_indicator = " (NEW)" if test_name in ["events_management", "photo_gallery"] else " (UPDATED)" if test_name in ["statistics", "event_registration"] else ""
+        print(f"{test_name.replace('_', ' ').title()}{new_indicator}: {status}")
         if result:
             passed += 1
     
