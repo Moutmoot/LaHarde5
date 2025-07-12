@@ -130,15 +130,123 @@ def test_contact_form():
         print(f"❌ Contact form failed - error: {str(e)}")
         return False
 
-def test_event_registration():
-    """Test event registration API"""
-    print("\n🎉 Testing Event Registration API...")
+def test_events_management():
+    """Test NEW Events Management API - GET /api/evenements"""
+    print("\n📅 Testing NEW Events Management API...")
     
+    try:
+        response = requests.get(f"{BACKEND_URL}/evenements", timeout=10)
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.json()}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            if "evenements" in data:
+                events = data["evenements"]
+                print(f"✅ Events API successful - found {len(events)} upcoming events")
+                
+                # Verify default events were created
+                if len(events) >= 4:  # Should have at least 4 default events
+                    print("✅ Default events initialization verified")
+                    
+                    # Check for specific default events
+                    event_titles = [event.get("titre", "") for event in events]
+                    expected_events = ["Entraînement débutants", "Match amical vs. Les Fauves", "Tournoi Régional d'Hiver", "Soirée conviviale équipe"]
+                    
+                    found_events = 0
+                    for expected in expected_events:
+                        if any(expected in title for title in event_titles):
+                            found_events += 1
+                    
+                    print(f"  📊 Found {found_events}/{len(expected_events)} expected default events")
+                    
+                    # Verify event structure
+                    if events:
+                        sample_event = events[0]
+                        required_fields = ["id", "titre", "description", "date", "heure", "lieu", "type_evenement"]
+                        if all(field in sample_event for field in required_fields):
+                            print("✅ Event structure validation passed")
+                            return True
+                        else:
+                            missing_fields = [field for field in required_fields if field not in sample_event]
+                            print(f"❌ Event structure validation failed - missing fields: {missing_fields}")
+                            return False
+                else:
+                    print("❌ Default events not properly initialized")
+                    return False
+            else:
+                print("❌ Events API failed - missing 'evenements' field")
+                return False
+        else:
+            print(f"❌ Events API failed - status code {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Events API failed - error: {str(e)}")
+        return False
+
+def test_photo_gallery():
+    """Test NEW Photo Gallery API - GET /api/galerie"""
+    print("\n📸 Testing NEW Photo Gallery API...")
+    
+    try:
+        response = requests.get(f"{BACKEND_URL}/galerie", timeout=10)
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.json()}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            if "photos" in data:
+                photos = data["photos"]
+                print(f"✅ Gallery API successful - found {len(photos)} photos")
+                
+                # Verify default photos were created
+                if len(photos) >= 5:  # Should have at least 5 default photos
+                    print("✅ Default photos initialization verified")
+                    
+                    # Check photo categories
+                    categories = set(photo.get("categorie", "") for photo in photos)
+                    expected_categories = {"entraînement", "match", "équipe"}
+                    found_categories = categories.intersection(expected_categories)
+                    
+                    print(f"  📊 Found categories: {list(categories)}")
+                    print(f"  ✅ Expected categories found: {len(found_categories)}/{len(expected_categories)}")
+                    
+                    # Verify photo structure
+                    if photos:
+                        sample_photo = photos[0]
+                        required_fields = ["id", "titre", "description", "url_image", "categorie"]
+                        if all(field in sample_photo for field in required_fields):
+                            print("✅ Photo structure validation passed")
+                            return True
+                        else:
+                            missing_fields = [field for field in required_fields if field not in sample_photo]
+                            print(f"❌ Photo structure validation failed - missing fields: {missing_fields}")
+                            return False
+                else:
+                    print("❌ Default photos not properly initialized")
+                    return False
+            else:
+                print("❌ Gallery API failed - missing 'photos' field")
+                return False
+        else:
+            print(f"❌ Gallery API failed - status code {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Gallery API failed - error: {str(e)}")
+        return False
+
+def test_event_registration():
+    """Test event registration API with NEW event names"""
+    print("\n🎉 Testing Event Registration API with NEW event names...")
+    
+    # Test with one of the new default event names
     event_data = {
         "nom": "Claire Moreau",
         "email": "claire.moreau@email.fr",
         "telephone": "06 11 22 33 44",
-        "nom_evenement": "Tournoi de Printemps 2025"
+        "nom_evenement": "Entraînement débutants"  # Using new default event name
     }
     
     try:
@@ -155,7 +263,7 @@ def test_event_registration():
         if response.status_code == 200:
             data = response.json()
             if data.get("success"):
-                print("✅ Event registration successful")
+                print("✅ Event registration successful with new event name")
                 return True
             else:
                 print("❌ Event registration failed - invalid response")
