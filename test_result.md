@@ -267,9 +267,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Member Registration API"
-    - "Registration Form Modal"
-    - "French Roller Derby Homepage"
+    - "Events Management API"
+    - "Photo Gallery API"
+    - "Events Page & Navigation"
+    - "Photo Gallery Page"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -277,5 +278,7 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Implemented complete French roller derby website for La Harde club with registration functionality as core feature. Backend includes member registration, contact, and event APIs. Frontend has beautiful responsive design with registration/contact modals. Ready for comprehensive testing starting with backend APIs."
+  - agent: "main"
+    message: "ENHANCEMENT COMPLETE: Added photo gallery and upcoming events features as requested. Backend now includes events management API (GET/POST /api/evenements) and photo gallery API (GET/POST /api/galerie) with default data initialization. Frontend expanded with dedicated events and gallery pages with navigation, category filtering, and event registration functionality. Ready for testing new features."
   - agent: "testing"
     message: "🎉 BACKEND TESTING COMPLETED SUCCESSFULLY! All 4 backend APIs are working perfectly. Fixed critical .env loading issue that was preventing backend startup. Comprehensive testing with realistic French data confirms: ✅ Member Registration API (core feature) - fully functional with proper validation, MongoDB storage, and French responses ✅ Contact Form API - working correctly ✅ Event Registration API - working correctly ✅ Club Statistics API - providing accurate real-time data ✅ Health Check API - operational ✅ Validation & Error Handling - robust. Created comprehensive backend_test.py for future testing. All high-priority backend functionality is production-ready."
