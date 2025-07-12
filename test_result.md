@@ -235,6 +235,30 @@ frontend:
         agent: "main"
         comment: "Applied Tailwind CSS with custom styling, roller derby themed colors (red/yellow), responsive design, and sport-appropriate imagery."
 
+  - task: "Events Page & Navigation"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added dedicated events page with upcoming events display, event registration functionality, and navigation system between different sections."
+
+  - task: "Photo Gallery Page"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created photo gallery page with category filtering (équipe, entraînement, match, événement), responsive grid layout, and dynamic photo loading."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
